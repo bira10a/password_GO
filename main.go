@@ -28,6 +28,10 @@ func (acc *account) generatePassword(n int) {
 }
 
 func newAccount(login, password, urlString string) (*account, error) {
+	if login == "" {
+		return nil, errors.New("INVALID_LOGIN")
+	}
+
 	_, err := url.ParseRequestURI(urlString)
 	if err != nil {
 		return nil, errors.New("INVALID_URL")
@@ -39,7 +43,7 @@ func newAccount(login, password, urlString string) (*account, error) {
 		url:      urlString,
 	}
 
-	if login == "" {
+	if password == "" {
 		newAccount.generatePassword(10)
 	}
 
@@ -59,7 +63,6 @@ func main() {
 		return
 	}
 
-	myAccount.generatePassword(10)
 	myAccount.outputPassword()
 }
 
