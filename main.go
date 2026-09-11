@@ -3,9 +3,14 @@ package main
 import (
 	"fmt"
 	"password/bira10a/password_GO.git/account"
+	"password/bira10a/password_GO.git/files"
 )
 
 func main() {
+
+	files.WriteFiles("Hello! I am Joi", "file.txt")
+	// files.ReadFiles()
+
 	login := promptData("Введите login: ")
 	password := promptData("Введите password: ")
 	url := promptData("Введите url: ")
