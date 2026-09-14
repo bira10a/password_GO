@@ -22,6 +22,13 @@ func WriteFiles(content, name string) {
 	fmt.Println("Запись успешна")
 }
 
-func ReadFiles() {
-	// os.ReadFile()
+func ReadFiles(name string) {
+	file, err := os.ReadFile(name)
+
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Println("ReadFiles: ", string(file))
 }

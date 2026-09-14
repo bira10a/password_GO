@@ -9,7 +9,7 @@ import (
 func main() {
 
 	files.WriteFiles("Hello! I am Joi", "file.txt")
-	// files.ReadFiles()
+	files.ReadFiles("file.txt")
 
 	login := promptData("Введите login: ")
 	password := promptData("Введите password: ")
