@@ -5,18 +5,21 @@ import (
 	"fmt"
 	"math/rand/v2"
 	"net/url"
+	"time"
 )
 
 var letterRunes = []rune("1234567890qwertyuiopQWERTYUIOP")
 
 type account struct {
-	login    string
-	password string
-	url      string
+	Login     string    `json:"login"`
+	Password  string    `json:"password"`
+	Url       string    `json:"url"`
+	CreateAt  time.Time `json:"createAt"`
+	UpdatedAt time.Time `json:"updatedAt"`
 }
 
 func (acc account) OutputPassword() {
-	fmt.Println(acc.login, acc.password, acc.url)
+	fmt.Println(acc.Login, acc.Password, acc.Url)
 }
 
 func (acc *account) generatePassword(n int) {
@@ -26,7 +29,7 @@ func (acc *account) generatePassword(n int) {
 		res[i] = letterRunes[rand.IntN(len(letterRunes))]
 	}
 
-	acc.password = string(res)
+	acc.Password = string(res)
 }
 
 func NewAccount(login, password, urlString string) (*account, error) {
@@ -40,9 +43,11 @@ func NewAccount(login, password, urlString string) (*account, error) {
 	}
 
 	newAccount := &account{
-		login:    login,
-		password: password,
-		url:      urlString,
+		Login:     login,
+		Password:  password,
+		Url:       urlString,
+		CreateAt:  time.Now(),
+		UpdatedAt: time.Now(),
 	}
 
 	if password == "" {
