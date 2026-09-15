@@ -5,7 +5,7 @@ import (
 	"os"
 )
 
-func WriteFiles(content, name string) {
+func WriteFiles(content []byte, name string) {
 	file, err := os.Create(name)
 
 	if err != nil {
@@ -14,7 +14,7 @@ func WriteFiles(content, name string) {
 
 	defer file.Close()
 
-	_, err = file.WriteString(content)
+	_, err = file.Write(content)
 	if err != nil {
 		fmt.Println(err)
 		return

@@ -1,6 +1,7 @@
 package account
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"math/rand/v2"
@@ -30,6 +31,15 @@ func (acc *account) generatePassword(n int) {
 	}
 
 	acc.Password = string(res)
+}
+
+func (acc *account) ToBytes() ([]byte, error) {
+	file, err := json.Marshal(acc)
+
+	if err != nil {
+		return nil, err
+	}
+	return file, nil
 }
 
 func NewAccount(login, password, urlString string) (*account, error) {

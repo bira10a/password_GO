@@ -7,8 +7,44 @@ import (
 )
 
 func main() {
+	fmt.Println("___Менеджер паролей___")
+Menu:
+	for {
+		variant := getMenu()
+		switch variant {
+		case 1:
+			createAccount()
+		case 2:
+			findAccount()
+		case 3:
+			deleteAccount()
+		default:
+			break Menu
+		}
+	}
+}
 
-	files.WriteFiles("Hello! I am Joi", "file.txt")
+func getMenu() int {
+	var variant int
+	fmt.Println("Выберите вариант:")
+	fmt.Println("1. Создать аккаунт")
+	fmt.Println("2. Найти аккаунт")
+	fmt.Println("3. Удалить аккаунт")
+	fmt.Println("4. Выход")
+	fmt.Scan(&variant)
+	return variant
+}
+
+func findAccount() {
+
+}
+
+func deleteAccount() {
+
+}
+
+func createAccount() {
+	// files.WriteFiles("Hello! I am Joi", "file.txt")
 	files.ReadFiles("file.txt")
 
 	login := promptData("Введите login: ")
@@ -21,7 +57,14 @@ func main() {
 		return
 	}
 
-	myAccount.OutputPassword()
+	file, err := myAccount.ToBytes()
+
+	if err != nil {
+		fmt.Println("Не удалось преобразовать json")
+		return
+	}
+	files.WriteFiles(file, "data.json")
+	// myAccount.OutputPassword()
 }
 
 func promptData(prompt string) string {
