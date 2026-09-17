@@ -32,6 +32,13 @@ func getMenu() int {
 	fmt.Println("3. Удалить аккаунт")
 	fmt.Println("4. Выход")
 	fmt.Scan(&variant)
+
+	// «очистка» буфера после чтения числа
+	var dummy string
+	fmt.Scanln(&dummy)
+
+	fmt.Println()
+
 	return variant
 }
 
@@ -45,7 +52,7 @@ func deleteAccount() {
 
 func createAccount() {
 	// files.WriteFiles("Hello! I am Joi", "file.txt")
-	files.ReadFiles("file.txt")
+	// files.ReadFiles("file.txt")
 
 	login := promptData("Введите login: ")
 	password := promptData("Введите password: ")
@@ -57,13 +64,16 @@ func createAccount() {
 		return
 	}
 
-	file, err := myAccount.ToBytes()
+	vault := account.NewVault()
+	vault.AddAccount(*myAccount)
+
+	data, err := vault.ToBytes()
 
 	if err != nil {
 		fmt.Println("Не удалось преобразовать json")
 		return
 	}
-	files.WriteFiles(file, "data.json")
+	files.WriteFiles(data, "data.json")
 	// myAccount.OutputPassword()
 }
 
