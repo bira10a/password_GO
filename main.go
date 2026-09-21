@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"password/bira10a/password_GO.git/account"
-	"password/bira10a/password_GO.git/files"
 )
 
 func main() {
@@ -37,8 +36,6 @@ func getMenu() int {
 	var dummy string
 	fmt.Scanln(&dummy)
 
-	fmt.Println()
-
 	return variant
 }
 
@@ -67,14 +64,6 @@ func createAccount() {
 	vault := account.NewVault()
 	vault.AddAccount(*myAccount)
 
-	data, err := vault.ToBytes()
-
-	if err != nil {
-		fmt.Println("Не удалось преобразовать json")
-		return
-	}
-	files.WriteFiles(data, "data.json")
-	// myAccount.OutputPassword()
 }
 
 func promptData(prompt string) string {
