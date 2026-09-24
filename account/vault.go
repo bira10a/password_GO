@@ -3,7 +3,6 @@ package account
 import (
 	"encoding/json"
 	"fmt"
-	// "password/bira10a/password_GO.git/account"
 	"password/bira10a/password_GO.git/files"
 	"strings"
 	"time"
@@ -58,24 +57,13 @@ func (vault *Vault) DeleteAccountByUrl(url string) bool {
 	}
 
 	vault.Accounts = accounts
-	vault.UpdatedAt = time.Now()
-	data, err := vault.ToBytes()
-	if err != nil {
-		fmt.Println("Не удалось преобразовать")
-	}
-	files.WriteFiles(data, "data.json")
+	vault.save()
 	return isDeleted
 }
 
 func (vault *Vault) AddAccount(acc Account) {
 	vault.Accounts = append(vault.Accounts, acc)
-	vault.UpdatedAt = time.Now()
-
-	data, err := vault.ToBytes()
-	if err != nil {
-		fmt.Println("Не удалось преобразовать")
-	}
-	files.WriteFiles(data, "data.json")
+	vault.save()
 }
 
 func (vault *Vault) ToBytes() ([]byte, error) {
@@ -85,4 +73,13 @@ func (vault *Vault) ToBytes() ([]byte, error) {
 		return nil, err
 	}
 	return file, nil
+}
+
+func (vault *Vault) save() {
+	vault.UpdatedAt = time.Now()
+	data, err := vault.ToBytes()
+	if err != nil {
+		fmt.Println("Не удалось преобразовать")
+	}
+	files.WriteFiles(data, "data.json")
 }
