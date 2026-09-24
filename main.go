@@ -7,16 +7,18 @@ import (
 
 func main() {
 	fmt.Println("___Менеджер паролей___")
+	vault := account.NewVault()
+
 Menu:
 	for {
 		variant := getMenu()
 		switch variant {
 		case 1:
-			createAccount()
+			createAccount(vault)
 		case 2:
-			findAccount()
+			findAccount(vault)
 		case 3:
-			deleteAccount()
+			deleteAccount(vault)
 		default:
 			break Menu
 		}
@@ -39,15 +41,28 @@ func getMenu() int {
 	return variant
 }
 
-func findAccount() {
-
+func findAccount(vault *account.Vault) {
+	url := promptData("Введите url для поиска: ")
+	accounts := vault.FindAccountsByUrl(url)
+	if len(accounts) == 0 {
+		fmt.Println("Такой URL отсутствует")
+	}
+	for _, account := range accounts {
+		account.OutputPassword()
+	}
 }
 
-func deleteAccount() {
-
+func deleteAccount(vault *account.Vault) {
+	url := promptData("Введите url для удаления: ")
+	isDeleted := vault.DeleteAccountByUrl(url)
+	if isDeleted {
+		fmt.Println("Удаленно")
+	} else {
+		fmt.Println("Не найденно")
+	}
 }
 
-func createAccount() {
+func createAccount(vault *account.Vault) {
 	// files.WriteFiles("Hello! I am Joi", "file.txt")
 	// files.ReadFiles("file.txt")
 
@@ -61,7 +76,6 @@ func createAccount() {
 		return
 	}
 
-	vault := account.NewVault()
 	vault.AddAccount(*myAccount)
 
 }
